@@ -1,14 +1,16 @@
 package org.afob.prices;
 
+import org.afob.execution.Stock;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface PriceListener {
 
     /**
      *
-     * @param productId the id of the product for which the price is given
-     * @param price current price of the product
+     *  take stock params
      */
-    void priceTick(String productId, BigDecimal price);
+    List<Stock> priceTick(Stock st);
 
 }

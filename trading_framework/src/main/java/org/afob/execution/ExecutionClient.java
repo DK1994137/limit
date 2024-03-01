@@ -1,25 +1,44 @@
 package org.afob.execution;
 
+import java.util.List;
+
 public final class ExecutionClient {
 
     /**
      * Execute a buy order
-     * @param productId - the product to buy
-     * @param amount - the amount to buy
+     * @param name- the product to buy
+     * @param currentPrice- the amount to buy
      * @throws ExecutionException
+     *
      */
-    public void buy(String productId, int amount) throws ExecutionException {
-        throw new ExecutionException("failed to buy: environment error");
+    private Stock st;
+    private List<LimitOrder> limitOrders;
+
+    public Stock buy(String name,double currentPrice ) throws ExecutionException {
+        st.setName(name);
+        st.setCurrentPrice(currentPrice);
+        return st;
     }
 
     /**
      * Execute a sell order
-     * @param productId - the product to sell
-     * @param amount - the amount to sell
+     *
      * @throws ExecutionException
      */
-    public void sell(String productId, int amount) throws ExecutionException {
-        throw new ExecutionException("failed to sell: environment error");
+    public void sell(Stock stock) throws ExecutionException {
+        // Check if any limit orders can be executed based on the current stock price
+
+        for (LimitOrder order : limitOrders) {
+            if (stock.getName().equals(order.getStockNAme()) && stock.getCurrentPrice() <= order.getTargetPrice()) {
+                executeOrder(order);
+            }
+        }
+
+    }
+
+    private void executeOrder(LimitOrder order) {
+        // Implement logic to execute the order
+        System.out.println("Order Executed: ");
     }
 
 
